@@ -1,4 +1,5 @@
-from keras.preprocessing.image import ImageDataGenerator
+from keras.preprocessing.image import ImageDataGenerator, load_img, array_to_img, img_to_array
+import cv2
 
 data_gen_args = dict(featurewise_center=True,
                      featurewise_std_normalization=True,
@@ -11,9 +12,14 @@ mask_datagen = ImageDataGenerator(**data_gen_args)
 
 # Provide the same seed and keyword arguments to the fit and flow methods
 seed = 1
-image_datagen.fit(images, augment=True, seed=seed)
-mask_datagen.fit(masks, augment=True, seed=seed)
+'''
+img = load_img('./KerasData/Image/0a7d30b252359a10fd298b638b90cb9ada3acced4e0c0e5a3692013f432ee4e9.png')  # this is a PIL image
+x = img_to_array(img)  # this is a Numpy array with shape (3, 150, 150)
+x = x.reshape((1,) + x.shape)  # this is a Numpy array with shape (1, 3, 150, 150)
 
+image_datagen.fit(x, augment=True, seed=seed)
+mask_datagen.fit(x, augment=True, seed=seed)
+'''
 image_generator = image_datagen.flow_from_directory(
     './KerasData/Image',
     class_mode=None,
@@ -27,7 +33,10 @@ mask_generator = mask_datagen.flow_from_directory(
 # combine generators into one which yields image and masks
 train_generator = zip(image_generator, mask_generator)
 
+
+'''
 model.fit_generator(
     train_generator,
     steps_per_epoch=2000,
     epochs=50)
+'''

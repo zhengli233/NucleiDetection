@@ -8,7 +8,11 @@ for name in os.listdir(data_dir):
 	img_dir = data_dir + name + "/images/"
 	mask_dir = data_dir + name + '/masks/'
 	img_file = img_dir + os.listdir(img_dir)[0]
-	copy(img_file, './KerasData/Image')
+	try:
+		os.stat('./KerasData/Image/' + os.path.splitext(os.listdir(img_dir)[0])[0])
+	except:
+		os.mkdir('./KerasData/Image/' + os.path.splitext(os.listdir(img_dir)[0])[0])
+	copy(img_file, './KerasData/Image/' + os.path.splitext(os.listdir(img_dir)[0])[0])
 	masks = os.listdir(mask_dir)
 	first_read = True
 	for mask in masks:
@@ -18,6 +22,10 @@ for name in os.listdir(data_dir):
 			first_read = False
 		else:
 			combined_mask |= mask
-	cv2.imwrite('./KerasData/Mask/' + os.listdir(img_dir)[0], combined_mask)
+	try:
+		os.stat('./KerasData/Mask/' + os.path.splitext(os.listdir(img_dir)[0])[0])
+	except:
+		os.mkdir('./KerasData/Mask/' + os.path.splitext(os.listdir(img_dir)[0])[0])
+	cv2.imwrite('./KerasData/Mask/' + os.path.splitext(os.listdir(img_dir)[0])[0] + '/' + os.listdir(img_dir)[0], combined_mask)
 	count += 1
 	print(count)
