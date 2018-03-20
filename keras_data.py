@@ -14,17 +14,13 @@ seed = 1
 image_datagen.fit(images, augment=True, seed=seed)
 mask_datagen.fit(masks, augment=True, seed=seed)
 
-data_dir = './Data/stage1_train/'
-
-for name in os.listdir(data_dir):
-    directory = data_dir + name + "/images/"
-    image_generator = image_datagen.flow_from_directory(
-        ,
-        class_mode=None,
-        seed=seed)
+image_generator = image_datagen.flow_from_directory(
+    './KerasData/Image',
+    class_mode=None,
+    seed=seed)
 
 mask_generator = mask_datagen.flow_from_directory(
-    'data/masks',
+    './KerasData/Mask',
     class_mode=None,
     seed=seed)
 
