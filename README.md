@@ -30,15 +30,12 @@ problems:
 3. 41/65 test data has no masks!
 
 Solution:
-train a object detection model using tensorflow
-https://towardsdatascience.com/how-to-train-your-own-object-detector-with-tensorflows-object-detector-api-bec72ecfe1d9
+1. Data pre-process:
+	Apply mask on the original image to get the image with one nuclei, denoted as image_x, in shape of (num_images, width, height, channels). Could do it as (num_images, width * height * channels)
+	The contour of the nuclei, which can be got from get_contour(), will be the label of image_x, in the shape of (num_images, [x, y, w, h]).
+2. Build CNN
+3. Try to use YOLO
+	https://arxiv.org/pdf/1506.02640.pdf
 
-Done work
-create the dataset using the training data:
-https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/using_your_own_dataset.md
-basic idea:
-use cv2 to find the bound of each cell
-pass the image information and the bound to the creator, then the creator forms the dataset
-
-Current work:
-find out how to implement the R-CNN model
+The problem is that I haven't found out how to use the trained weight to implement YOLO
+So I still need time to learn YOLO.

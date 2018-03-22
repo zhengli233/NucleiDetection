@@ -1,5 +1,7 @@
 import cv2
 import os
+from matplotlib import pyplot as plt
+from contour import get_contours
 '''
 mask_dir = './Data/stage1_train/516a0e20327d6dfcedcf57e3056115e4fb29cdf4cb349003bdfc75c9b7f5c2cf/masks/'
 masks = os.listdir(mask_dir)
@@ -29,6 +31,21 @@ for i in range(360):
 
 print(count_combined, count_mask)
 cv2.imwrite('combined_mask.png', combined_mask)
+
+
+print('./KerasData/Image/' + os.path.splitext(os.listdir(img_dir)[0])[0])
+print(os.path.splitext("./Data/stage1_train/516a0e20327d6dfcedcf57e3056115e4fb29cdf4cb349003bdfc75c9b7f5c2cf/images/516a0e20327d6dfcedcf57e3056115e4fb29cdf4cb349003bdfc75c9b7f5c2cf.png")[0])
 '''
 
-print(os.path.splitext("./Data/stage1_train/516a0e20327d6dfcedcf57e3056115e4fb29cdf4cb349003bdfc75c9b7f5c2cf/images/516a0e20327d6dfcedcf57e3056115e4fb29cdf4cb349003bdfc75c9b7f5c2cf.png")[0])
+img_dir = './Data/stage1_train/516a0e20327d6dfcedcf57e3056115e4fb29cdf4cb349003bdfc75c9b7f5c2cf/images/516a0e20327d6dfcedcf57e3056115e4fb29cdf4cb349003bdfc75c9b7f5c2cf.png'
+img = cv2.imread(img_dir)
+mask_dir = './Data/stage1_train/516a0e20327d6dfcedcf57e3056115e4fb29cdf4cb349003bdfc75c9b7f5c2cf/masks/dd404644bdf6d796aee4823214deb736de9d0bacea79fb91ede87ff7ffdef57d.png'
+mask = cv2.imread(mask_dir)
+'''
+single = img & mask
+print(single.shape)
+plt.imshow(single)
+plt.imshow(img)
+plt.show()
+'''
+print(get_contours(mask_dir))
