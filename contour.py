@@ -1,6 +1,8 @@
 '''
 get the contour
 '''
+from __future__ import division
+
 import cv2
 import numpy as np
 
@@ -10,11 +12,14 @@ def get_contours(directory):
 	imgray = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
 	ret, thresh = cv2.threshold(imgray, 127, 255, 0)
 	image, contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
-	for c in contours:
-		rect = cv2.boundingRect(c)
-		# print(rect)
-	return cv2.boundingRect(c)
+	rect = cv2.boundingRect(contours[0])
+	rect = list(rect)
+	for i in range(4):
+		rect[i] = rect[i] / 256
+	return rect
 
+
+# print(get_contours(directory))
 '''
 cv2.rectangle(image, (x, y), (x + w, y + h), (128, 255, 0), 2)
 cv2.imwrite('contour.png', image)
