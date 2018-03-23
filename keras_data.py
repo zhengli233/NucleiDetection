@@ -4,14 +4,14 @@ from keras.layers import Conv2D, MaxPooling2D, Conv2DTranspose
 from keras.layers import Activation, Dropout, Flatten, Dense
 from keras import backend as K
 import cv2
-import pickle
-'''
+import numpy as np
+
 class FixedImageDataGenerator(ImageDataGenerator):
     def standardize(self, x):
         if self.featurewise_center:
             x = ((x/255.) - 0.5) * 2.
         return x
-'''
+
 img_width, img_height = 256, 256
 
 if K.image_data_format() == 'channels_first':
@@ -48,40 +48,15 @@ data_gen_args = dict(featurewise_center=True,
                      width_shift_range=0.1,
                      height_shift_range=0.1,
                      zoom_range=0.2)
-'''
-image_datagen = FixedImageDataGenerator(**data_gen_args)
-mask_datagen = FixedImageDataGenerator(**data_gen_args)
-'''
 
-# Provide the same seed and keyword arguments to the fit and flow methods
 seed = 1
-'''
-img = load_img('./KerasData/Image/0a7d30b252359a10fd298b638b90cb9ada3acced4e0c0e5a3692013f432ee4e9.png')  # this is a PIL image
-x = img_to_array(img)  # this is a Numpy array with shape (3, 150, 150)
-x = x.reshape((1,) + x.shape)  # this is a Numpy array with shape (1, 3, 150, 150)
 
-image_datagen.fit(x, augment=True, seed=seed)
-mask_datagen.fit(x, augment=True, seed=seed)
 
-image_generator = image_datagen.flow_from_directory(
-    './KerasData/Image',
-    class_mode=None,
-    seed=seed)
-
-mask_generator = mask_datagen.flow_from_directory(
-    './KerasData/Mask',
-    class_mode=None,
-    seed=seed)
-'''
-# combine generators into one which yields image and masks
-
-# train_generator = zip(image_generator, mask_generator)
-
-epochs = 30
-
-x_train = pickle.load(open('X_train.txt', 'rb'))
-y_train = pickle.load(open('y_train.txt', 'rb'))
-datagen = ImageDataGenerator(**data_gen_args)
+epochs = 40
+data = np.load('data.npz')
+x_train = data['X_train']
+y_train = data['y_train']
+datagen = FixedImageDataGenerator(**data_gen_args)
 model.fit_generator(datagen.flow(x_train, y_train, batch_size=32),
                     steps_per_epoch=len(x_train) / 32, epochs=epochs)
 

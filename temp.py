@@ -2,6 +2,7 @@ import cv2
 import os
 from matplotlib import pyplot as plt
 from contour import get_contours
+import numpy as np
 '''
 mask_dir = './Data/stage1_train/516a0e20327d6dfcedcf57e3056115e4fb29cdf4cb349003bdfc75c9b7f5c2cf/masks/'
 masks = os.listdir(mask_dir)
@@ -48,4 +49,10 @@ plt.imshow(single)
 plt.imshow(img)
 plt.show()
 '''
-print(get_contours(mask_dir))
+npz = []
+npz.append(mask)
+print(mask.shape)
+np.savez('mask.npz', npz=npz)
+file = np.load('mask.npz')
+mask = file['npz']
+print(mask.shape)

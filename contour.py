@@ -15,7 +15,7 @@ def get_contours(directory):
 	rect = cv2.boundingRect(contours[0])
 	rect = list(rect)
 	for i in range(4):
-		rect[i] = rect[i] / 256
+		rect[i] /= 256
 	return rect
 
 

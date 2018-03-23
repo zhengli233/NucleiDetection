@@ -3,11 +3,10 @@ import os
 import cv2
 from contour import get_contours
 import numpy as np
-import pickle
 
 def get_X():
 	data_dir = "./Data/stage1_train/"
-	# count = 0
+	count = 0
 	X_train = []
 	y_train = []
 	for name in os.listdir(data_dir):
@@ -15,8 +14,9 @@ def get_X():
 		img_file = img_dir + os.listdir(img_dir)[0]
 		mask_dir = data_dir + name + '/masks/'
 		original_img = cv2.imread(img_file)
-		# print(count)
-
+		print(count)
+		if count >= 2000:
+			break
 		'''
 		try:
 			os.stat('./KerasData/Image/' + os.path.splitext(os.listdir(img_dir)[0])[0])
@@ -24,7 +24,7 @@ def get_X():
 			os.mkdir('./KerasData/Image/' + os.path.splitext(os.listdir(img_dir)[0])[0])
 		copy(img_file, './KerasData/Image/' + os.path.splitext(os.listdir(img_dir)[0])[0])
 		'''
-		mask_count = 0
+		# mask_count = 0
 		if original_img.shape == (256, 256, 3):
 			masks = os.listdir(mask_dir)
 			for mask in masks:
@@ -35,20 +35,14 @@ def get_X():
 					# masked_img = cv2.resize(masked_img, (256, 256))
 				cv2.normalize(masked_img, masked_img, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
 				X_train.append(masked_img)
-				print(mask_count)
-				mask_count += 1
-
-			# count += 1
-			# if count == 10:
-				# break	
+				# print(mask_count)
+				# mask_count += 1
+				count += 1
+					
 		
 	print('created data')
-	with open('X_train.txt', 'wb') as fp:
-		pickle.dump(X_train, fp)
-	print('saved X_train!!!')
-	with open('y_train.txt', 'wb') as fp:
-		pickle.dump(y_train, fp)
-	print('saved y_train!!!')
+	np.savez('data.npz', X_train=X_train, y_train=y_train)
+	print('saved data!!!')
 	
 
 
