@@ -1,20 +1,8 @@
 log
 
 problems:
-data is too big to run!!!
-data is too big to run!!!
-data is too big to run!!!
-data is too big to run!!!
-data is too big to run!!!
-data is too big to run!!!
-data is too big to run!!!
-data is too big to run!!!
-data is too big to run!!!
-data is too big to run!!!
-data is too big to run!!!
-data is too big to run!!!
-data is too big to run!!!
-fuck!
+Even though the training accuracy is high, the prediction of the trained model is meaningless.
+Maybe need to use gray scale images as the label.
 
 Solution:
 1. Data pre-process:
