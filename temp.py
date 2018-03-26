@@ -36,19 +36,19 @@ cv2.imwrite('combined_mask.png', combined_mask)
 
 print('./KerasData/Image/' + os.path.splitext(os.listdir(img_dir)[0])[0])
 print(os.path.splitext("./Data/stage1_train/516a0e20327d6dfcedcf57e3056115e4fb29cdf4cb349003bdfc75c9b7f5c2cf/images/516a0e20327d6dfcedcf57e3056115e4fb29cdf4cb349003bdfc75c9b7f5c2cf.png")[0])
-'''
+
 
 img_dir = './Data/stage1_train/516a0e20327d6dfcedcf57e3056115e4fb29cdf4cb349003bdfc75c9b7f5c2cf/images/516a0e20327d6dfcedcf57e3056115e4fb29cdf4cb349003bdfc75c9b7f5c2cf.png'
 img = cv2.imread(img_dir)
 mask_dir = './Data/stage1_train/516a0e20327d6dfcedcf57e3056115e4fb29cdf4cb349003bdfc75c9b7f5c2cf/masks/dd404644bdf6d796aee4823214deb736de9d0bacea79fb91ede87ff7ffdef57d.png'
 mask = cv2.imread(mask_dir)
-'''
+
 single = img & mask
 print(single.shape)
 plt.imshow(single)
 plt.imshow(img)
 plt.show()
-'''
+
 npz = []
 npz.append(mask)
 print(mask.shape)
@@ -56,3 +56,10 @@ np.savez('mask.npz', npz=npz)
 file = np.load('mask.npz')
 mask = file['npz']
 print(mask.shape)
+'''
+
+data = np.load('combined.npz')
+x_train = data['X_train']
+y_train = data['y_train']
+
+print(x_train.shape, y_train.shape)

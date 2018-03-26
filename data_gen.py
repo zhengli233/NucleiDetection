@@ -28,13 +28,16 @@ def get_X():
 		if original_img.shape == (256, 256, 3):
 			masks = os.listdir(mask_dir)
 			for mask in masks:
-				y_train.append(get_contours(mask_dir + mask))
+				# y_train.append(get_contours(mask_dir + mask))
 				mask = cv2.imread(mask_dir + mask)
 				masked_img = original_img & mask
 				# if masked_img.shape != (256, 256):
 					# masked_img = cv2.resize(masked_img, (256, 256))
 				cv2.normalize(masked_img, masked_img, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
 				X_train.append(masked_img)
+				# mask = cv2.resize(mask, (262, 262))
+				cv2.normalize(mask, mask, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
+				y_train.append(mask)
 				# print(mask_count)
 				# mask_count += 1
 				count += 1
