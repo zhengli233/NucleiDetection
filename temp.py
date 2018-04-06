@@ -63,3 +63,12 @@ x_train = data['X_train']
 y_train = data['y_train']
 
 print(x_train.shape, y_train.shape)
+print(x_train)
+
+'''
+mask_dir = './Data/stage1_train/516a0e20327d6dfcedcf57e3056115e4fb29cdf4cb349003bdfc75c9b7f5c2cf/masks/dd404644bdf6d796aee4823214deb736de9d0bacea79fb91ede87ff7ffdef57d.png'
+mask = cv2.imread(mask_dir)
+mask = cv2.cvtColor(mask, cv2.COLOR_BGR2GRAY)
+
+print(mask.shape)
+'''

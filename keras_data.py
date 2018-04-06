@@ -33,19 +33,20 @@ model.add(MaxPooling2D(pool_size=(2, 2)))
 
 
 model.add(Flatten())  # this converts our 3D feature maps to 1D feature vectors
-model.add(Dense(128))
+model.add(Dense(256))
 model.add(Activation('relu'))
 # model.add(Dropout(0.5))
-model.add(Dense(12288))
+model.add(Dense(4096))
 model.add(Activation('relu'))
 
-model.add(Reshape((64, 64, 3)))
+model.add(Reshape((64, 64, 1)))
+model.add(Conv2DTranspose(64, (3, 3), data_format='channels_last'))
+model.add(Activation('relu'))
 model.add(UpSampling2D(size=(2, 2)))
-# model.add(Conv2DTranspose(64, (3, 3)))
-# model.add(Activation('relu'))
+model.add(Conv2DTranspose(1, (3, 3)))
+model.add(Activation('relu'))
 model.add(UpSampling2D(size=(2, 2)))
-# model.add(Conv2DTranspose(32, (3, 3)))
-# model.add(Activation('relu'))
+
 
 model.compile(loss='binary_crossentropy',
               optimizer='rmsprop',
@@ -62,7 +63,7 @@ data_gen_args = dict(featurewise_center=True,
 seed = 7
 
 
-epochs = 80
+epochs = 10
 data = np.load('combined.npz')
 x_train = data['X_train']
 y_train = data['y_train']

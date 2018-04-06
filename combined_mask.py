@@ -25,20 +25,23 @@ def get_X():
 		# mask_count = 0
 		if original_img.shape != (256, 256, 3):
 			original_img = cv2.resize(original_img, (256, 256))
-		cv2.normalize(original_img, original_img, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
+		original_img = cv2.normalize(original_img, None, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
 		X_train.append(original_img)
 		masks = os.listdir(mask_dir)
 		first_read = True
 		for mask in masks:
 			mask = cv2.imread(mask_dir + mask)
-			if mask.shape != (256, 256, 3):
-				mask = cv2.resize(mask, (256, 256))
+			mask = cv2.cvtColor(mask, cv2.COLOR_BGR2GRAY)
+			if mask.shape != (268, 268):
+				mask = cv2.resize(mask, (268, 268))
 			if first_read:
 				combined_mask = mask
 				first_read = False
 			else:
 				combined_mask |= mask
-		cv2.normalize(combined_mask, combined_mask, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
+		combined_mask = cv2.normalize(combined_mask, None, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
+		combined_mask = np.array(combined_mask)
+		combined_mask = np.reshape(combined_mask, (268, 268, 1))
 		y_train.append(combined_mask)
 			
 		
