@@ -3,6 +3,7 @@ import cv2
 
 
 def preprocessing(original_img):
+    original_img = cv2.cvtColor(original_img, cv2.COLOR_RGB2GRAY)
     m, n = original_img.shape
     num = np.zeros((256, 1))
     for i in range(m):
