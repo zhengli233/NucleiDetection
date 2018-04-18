@@ -53,14 +53,14 @@ seed = 7
 
 
 epochs = 3
-data = np.load('/home/zhengli/ECE523/Project/model/combined.npz')
+data = np.load('/home/zhengli/ECE523/Project/model/preprocessed.npz')
 x_train = data['X_train']
 y_train = data['y_train']
 
 model.fit(x=x_train, y=y_train, batch_size=32, epochs=epochs)
 
 
-save_path = 'combined_model'
+save_path = 'preprocessed_model'
 
 model_yaml = model.to_yaml()
 with open("/home/zhengli/ECE523/Project/model/" + save_path + ".yaml", "w") as yaml_file:

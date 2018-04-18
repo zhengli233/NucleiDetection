@@ -2,6 +2,7 @@ import os
 import cv2
 from contour import get_contours
 import numpy as np
+from Preprocessing import preprocessing
 
 def get_X():
 	data_dir = "./Data/stage1_train/"
@@ -13,7 +14,7 @@ def get_X():
 		img_file = img_dir + os.listdir(img_dir)[0]
 		mask_dir = data_dir + name + '/masks/'
 		original_img = cv2.imread(img_file)
-		
+		original_img = preprocessing(original_img)
 		if original_img.shape != (256, 256, 3):
 			original_img = cv2.resize(original_img, (256, 256))
 		original_img = cv2.normalize(original_img, None, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
@@ -37,7 +38,7 @@ def get_X():
 			
 		
 	print('created data')
-	np.savez('/home/zhengli/ECE523/Project/model/combined.npz', X_train=X_train, y_train=y_train)
+	np.savez('/home/zhengli/ECE523/Project/model/preprocessed.npz', X_train=X_train, y_train=y_train)
 	print('saved data!!!')
 		
 
