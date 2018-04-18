@@ -9,11 +9,13 @@ from contour import get_contours
 def filter(threshold):
 	for i, row in enumerate(y):
 		for j, chnl in enumerate(row):
-			for k, pixel in enumerate(chnl):
-				if pixel > threshold:
-					y[i][j][k] = 1
-				else:
-					y[i][j][k] = 0
+			pixel = 0
+			for k, channel in enumerate(chnl):
+				pixel += channel
+			if pixel > threshold * 3:
+				y[i][j] = [1 , 1, 1]
+			else:
+				y[i][j] = [0, 0, 0]
 
 file_path = 'combined_model'
 yaml_file = open('/home/zhengli/ECE523/Project/model/' + file_path + '.yaml', 'r')
@@ -26,8 +28,9 @@ print("Loaded model from" + file_path)
  
 # evaluate loaded model on test data
 loaded_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
-name = '1cdbfee1951356e7b0a215073828695fe1ead5f8b1add119b6645d2fdc8d844e'
+name = '0a849e0eb15faa8a6d7329c3dd66aabe9a294cccb52ed30a90c8ca99092ae732'
 img_dir = './Data/stage1_test/' + name + '/images/' + name + '.png'
+print(img_dir)
 img = cv2.imread(img_dir)
 height, width, channel = img.shape
 print(img.shape)
@@ -39,7 +42,7 @@ resized_img = cv2.normalize(resized_img, None, alpha=0, beta=1, norm_type=cv2.NO
 y = loaded_model.predict(np.expand_dims(resized_img, axis=0), steps=1)
 y = cv2.resize(y[0], (width, height))
 # y = np.reshape(y, (256, 256, 3))
-filter(0.1)
+filter(0.2)
 print(y.shape)
 y = cv2.normalize(y, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
 rects = get_contours(y, 'image')

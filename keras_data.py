@@ -37,6 +37,7 @@ model.add(Reshape((64, 64, 1)))
 model.add(Conv2DTranspose(32, (3, 3), padding='same'))
 model.add(Activation('relu'))
 model.add(UpSampling2D(size=(2, 2)))
+
 model.add(Conv2DTranspose(3, (3, 3), padding='same'))
 model.add(Activation('relu'))
 model.add(UpSampling2D(size=(2, 2)))
