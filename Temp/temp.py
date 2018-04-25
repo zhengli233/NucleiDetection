@@ -2,7 +2,7 @@ import cv2
 import os
 import random
 from matplotlib import pyplot as plt
-from contour import get_contours
+# from contour import get_contours
 import numpy as np
 '''
 mask_dir = './Data/stage1_train/516a0e20327d6dfcedcf57e3056115e4fb29cdf4cb349003bdfc75c9b7f5c2cf/masks/'
@@ -57,14 +57,13 @@ np.savez('mask.npz', npz=npz)
 file = np.load('mask.npz')
 mask = file['npz']
 print(mask.shape)
-'''
+
 
 data = np.load('/home/zhengli/ECE523/Project/model/selected.npz')
 x_train = data['X_train']
 y_train = data['y_train']
 
 print(x_train.shape, y_train.shape)
-'''
 
 img_dir = './Data/stage1_train/516a0e20327d6dfcedcf57e3056115e4fb29cdf4cb349003bdfc75c9b7f5c2cf/images/516a0e20327d6dfcedcf57e3056115e4fb29cdf4cb349003bdfc75c9b7f5c2cf.png'
 img = cv2.imread(img_dir)
@@ -99,3 +98,10 @@ for name in os.listdir(data_dir):
 	print(selected_masks)
 	break
 '''
+
+x = np.array([[1, 1, 1],
+	[1, 1, 1],
+	[1, 1, 1]])
+print(x)
+y = np.array(255 * x, dtype=int)
+print(y)

@@ -3,6 +3,7 @@ import cv2
 from contour import get_contours
 import numpy as np
 from Preprocessing import preprocessing
+from sklearn.model_selection import train_test_split
 
 def get_X():
 	data_dir = "./Data/stage1_train/"
@@ -36,9 +37,9 @@ def get_X():
 		# combined_mask = np.reshape(combined_mask, (256, 256, 3))
 		y_train.append(combined_mask)
 			
-		
+	X_train, X_test, y_train, y_test = train_test_split(X_train, y_train, test_size=0.2, random_state=0)	
 	print('created data')
-	np.savez('/home/zhengli/ECE523/Project/model/preprocessed.npz', X_train=X_train, y_train=y_train)
+	np.savez('/home/zhengli/ECE523/Project/model/splited.npz', X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test)
 	print('saved data!!!')
 		
 

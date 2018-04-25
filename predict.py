@@ -23,7 +23,7 @@ def filter(threshold):
 			else:
 				y[i][j] = [0, 0, 0]
 
-file_path = 'preprocessed_model'
+file_path = '3_layer_model'
 yaml_file = open('/home/zhengli/ECE523/Project/model/' + file_path + '.yaml', 'r')
 loaded_model_yaml = yaml_file.read()
 yaml_file.close()
@@ -34,7 +34,7 @@ print("Loaded model from" + file_path)
  
 # evaluate loaded model on test data
 loaded_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
-name = gray_few
+name = gray_massive
 img_dir = './Data/stage1_test/' + name + '/images/' + name + '.png'
 print(img_dir)
 img = cv2.imread(img_dir)
@@ -49,7 +49,7 @@ resized_img = cv2.normalize(resized_img, None, alpha=0, beta=1, norm_type=cv2.NO
 y = loaded_model.predict(np.expand_dims(resized_img, axis=0), steps=1)
 y = cv2.resize(y[0], (width, height))
 # y = np.reshape(y, (256, 256, 3))
-filter(0.2)
+filter(0.4)
 print(y.shape)
 y = cv2.normalize(y, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
 rects = get_contours(y, 'image')
