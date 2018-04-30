@@ -39,7 +39,9 @@ data = np.load('/home/zhengli/ECE523/Project/model/splited.npz')
 data_x = data['X_train']
 data_y = data['y_train']
 # train test data split
-train_x, test_x, train_y, test_y = train_test_split(data_x, data_y, test_size=0.2, random_state=0)
+# train_x, test_x, train_y, test_y = train_test_split(data_x, data_y, test_size=0.2, random_state=0)
+test_x = data['X_test']
+test_y = data['y_test']
 accuracy = []
 print(test_x.shape)
 for img in range(test_x.shape[0]):
