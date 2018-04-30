@@ -1,4 +1,5 @@
 from keras.models import model_from_yaml
+from keras.utils.vis_utils import plot_model
 import numpy as np
 import os
 import cv2
@@ -22,7 +23,7 @@ def filter(threshold):
 
 
 
-file_path = 'splited_model'
+file_path = 'test_model'
 yaml_file = open('/home/zhengli/ECE523/Project/model/' + file_path + '.yaml', 'r')
 loaded_model_yaml = yaml_file.read()
 yaml_file.close()
@@ -30,7 +31,7 @@ loaded_model = model_from_yaml(loaded_model_yaml)
 # load weights into new model
 loaded_model.load_weights('/home/zhengli/ECE523/Project/model/' + file_path + ".h5")
 print("Loaded model from " + file_path)
-
+plot_model(loaded_model, to_file='model.png')
 
 # evaluate loaded model on test data
 loaded_model.compile(loss='binary_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
@@ -45,7 +46,7 @@ for img in range(test_x.shape[0]):
     width, height, channel = test_x[img].shape
     predict_y = loaded_model.predict(np.expand_dims(test_x[img], axis=0), steps=1)
     predict_y = cv2.resize(predict_y[0], (width, height))
-    filter(0.35)
+    filter(0.4)
     predict_y = np.array(predict_y, dtype=int)
     test_temp = cv2.normalize(test_y[img], None, alpha=0, beta=1, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
     test_temp = np.array(test_temp, dtype=int)
@@ -58,4 +59,3 @@ for img in range(test_x.shape[0]):
 print('accuracy is :',accuracy)
 accuracy_avg = sum(accuracy)/len(accuracy)
 print('average accuracy is:',accuracy_avg )
-#

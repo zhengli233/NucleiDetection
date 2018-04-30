@@ -15,17 +15,24 @@ else:
 
 
 model = Sequential()
-model.add(Conv2D(16, (3, 3), padding='same', input_shape=input_shape))
+model.add(Conv2D(32, (3, 3), padding='same', input_shape=input_shape))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
-
+'''
 model.add(Conv2D(32, (3, 3), padding='same'))
+model.add(Activation('relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+'''
+model.add(Conv2D(64, (3, 3), padding='same'))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 
 model.add(Conv2D(64, (3, 3), padding='same'))
 model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size=(2, 2)))
+
+model.add(Conv2D(64, (3, 3), padding='same'))
+model.add(Activation('relu'))
+
 
 '''
 model.add(Flatten())
@@ -41,11 +48,11 @@ model.add(Reshape((64, 64, 1)))
 model.add(Conv2DTranspose(32, (3, 3), padding='same'))
 model.add(Activation('relu'))
 model.add(UpSampling2D(size=(2, 2)))
-
+'''
 model.add(Conv2DTranspose(16, (3, 3), padding='same'))
 model.add(Activation('relu'))
 model.add(UpSampling2D(size=(2, 2)))
-
+'''
 model.add(Conv2DTranspose(3, (3, 3), padding='same'))
 model.add(Activation('relu'))
 model.add(UpSampling2D(size=(2, 2)))
@@ -68,7 +75,7 @@ y_train = data['y_train']
 model.fit(x=x_train, y=y_train, batch_size=32, epochs=epochs)
 
 
-save_path = '3_layer_model'
+save_path = 'test2_model'
 
 model_yaml = model.to_yaml()
 with open("/home/zhengli/ECE523/Project/model/" + save_path + ".yaml", "w") as yaml_file:

@@ -23,7 +23,7 @@ def filter(threshold):
 			else:
 				y[i][j] = [0, 0, 0]
 
-file_path = '3_layer_model'
+file_path = 'test_model'
 yaml_file = open('/home/zhengli/ECE523/Project/model/' + file_path + '.yaml', 'r')
 loaded_model_yaml = yaml_file.read()
 yaml_file.close()
@@ -52,6 +52,7 @@ y = cv2.resize(y[0], (width, height))
 filter(0.4)
 print(y.shape)
 y = cv2.normalize(y, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
+print(y)
 rects = get_contours(y, 'image')
 
 for rect in rects:
